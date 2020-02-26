@@ -1,0 +1,17 @@
+﻿body {
+    position: relative;
+    font-family: $font-family-base;
+    height: 100vh;
+
+    h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: $font-family-headings;
+    }
+
+    .hidden, .hide {
+        display: none;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+}

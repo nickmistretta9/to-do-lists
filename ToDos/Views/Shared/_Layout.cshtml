@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ToDos</title>
+
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <environment include="Development">
+        <link href="~/dist/js.style.css" rel="stylesheet">
+        <link href="~/dist/style.style.css" rel="stylesheet">
+    </environment>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="menu">
+            <a href="javascript:void('')"><i class="fas fa-bars"></i></a>
+        </div>
+        <div class="title">
+            <h2>To Do's</h2>
+        </div>
+        <div class="user">
+            <a href="javascript:void('')"><i class="fas fa-user"></i></a>
+        </div>
+    </div>
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <script src="~/dist/js.bundle.js"></script>
+</body>
+</html>

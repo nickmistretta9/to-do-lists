@@ -1,0 +1,10 @@
+﻿.body-content {
+    height:100%;
+    padding:40px;
+    .flex {
+        display:flex;
+        &.wrap {
+            flex-wrap:wrap;
+        }
+    }
+}

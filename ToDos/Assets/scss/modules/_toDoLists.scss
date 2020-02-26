@@ -1,0 +1,112 @@
+﻿.to-do-lists {
+    position:relative;
+    .new-list {
+        position:absolute;
+        top:0;
+        right:0;
+        background:$secondary;
+        padding:20px;
+        a {
+            text-decoration:none;
+            color:#fff;
+        }
+    }
+    .headings {
+        text-align:center;
+        margin-bottom:20px;
+        h1 {
+            margin-bottom:0;
+        }
+        h4 {
+            font-size:20px;
+            font-style:italic;
+        }
+    }
+    .to-do-wrapper {
+        overflow-x:scroll;
+        .to-do-list {
+            background:#ccc;
+            margin:0 20px;
+            padding:20px 20px 0;
+            flex:1 1 20%;
+            max-width:20%;
+            display:flex;
+            flex-direction:column;
+            height:100%;
+            &:first-child {
+                margin-left:0;
+            }
+            &:last-child {
+                margin-right:0;
+            }
+            .list-title {
+                margin:-20px -20px 0;
+                padding:15px;
+                background:$primary;
+                color:#fff;
+                text-align:center;
+                text-transform:uppercase;
+                font-weight:bold;
+                font-size:16px;                
+            }
+            .to-do-item {
+                border-bottom:1px solid #000;
+                text-align:center;
+                margin:0 -20px;
+                transition:all 0.3s ease-in-out;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                padding:20px 10px;
+                flex-wrap:wrap;
+                &:hover {
+                    background:$secondary;
+                    .item-title, .fa-plus-square {
+                        color:#fff;
+                    }
+                }
+                .item-info {
+                    display:flex;
+                    width:100%;
+                    justify-content:space-between;
+                    .item-title {
+                        padding-left:10px;
+                        font-weight:bold;
+                        display:block;
+                        transition:all 0.3s ease-in-out;
+                        text-align:right;
+                        &.strike {
+                            text-decoration:line-through;
+                        }
+                    }
+                }
+                &.add-new {
+                    border-bottom:none;
+                    a {
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        text-decoration:none;
+                        width:100%;
+                        height:100%;
+                        padding:20px;
+                        margin:-20px -10px;
+                        .fa-plus-square {
+                            transition:all 0.3s ease-in-out;
+                        }
+                    }
+                }
+                .actions {
+                    flex:1 1 100%;
+                    display:flex;
+                    justify-content:flex-start;
+                    a {
+                        text-decoration:none;
+                        font-size:16px;
+                        margin:0 5px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+﻿.nav-bar {
+    @include gradient-x($primary, $secondary);
+    color:#fff;
+    height:80px;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 40px;
+    .title {
+        text-transform:uppercase;
+    }
+    .menu, .user {
+        a {
+            color:#fff;
+            font-size:26px;
+            text-decoration:none;
+        }
+    }
+}

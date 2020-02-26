@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ToDos.Models.ToDoList>
+
+@{
+    ViewData["Title"] = "To Do Lists";
+}
+
+<div class="to-do-lists">
+    <div class="new-list">
+        <a href="javascript:void('')" class="add-new-list">Add New To Do List</a>
+    </div>
+    <div class="headings">
+        <h1>Welcome To The To-Do List Application</h1>
+        <h4>Take A Look At Your Current To-Do's</h4>
+    </div>
+    <div class="to-do-wrapper">
+        <div class="flex">
+            @foreach(var list in Model)
+            {
+                <div class="to-do-list" data-id="@list.ID">
+                    <div class="list-title">@list.Title</div>
+                    <div class="items-list">
+                        @foreach(var listItem in list.ToDoListItems)
+                        {
+                            <div class="to-do-item" data-item-id="@listItem.ID">
+                                <div class="actions">
+                                    <a href="javascript:void('')" class="edit-item"><i class="far fa-edit"></i></a>
+                                    <a href="javascript:void('')" class="delete-item"><i class="far fa-trash-alt"></i></a>
+                                </div>
+                                <div class="item-info">
+                                    <input type="checkbox" class="item-complete" data-item-id="@listItem.ID" data-complete="@listItem.Complete" />
+                                    <div class="item-title">@listItem.Title</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="to-do-item add-new">
+                        <a href="javascript:void('')">
+                            <i class="fas fa-plus-square"></i>
+                            <div class="item-title">Add New To Do List Item</div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="new-item-modal out-of-view">
+    <div class="content">
+        <span class="hidden list-value" value=""></span>
+        <div class="close">
+            <a href="javascript:void('')"><i class="fas fa-times-circle"></i></a>
+        </div>
+        <h4>Add New To Do List Item</h4>
+        <textarea rows="4" class="new-to-do-description form-control" placeholder="A New To Do..."></textarea>
+        <div class="buttons">
+            <a href="javascript:void('')" class="btn btn-cancel">Cancel</a>
+            <a href="javascript:void('')" class="btn btn-primary save-to-do">Save</a>
+        </div>
+    </div>
+</div>

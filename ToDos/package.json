@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "name": "to-dos",
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "autoprefixer": "^9.7.4",
+    "babel": "6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^3.2.0",
+    "cssnano": "4.1.10",
+    "fibers": "^4.0.1",
+    "gulp": "4.0.2",
+    "gulp-concat": "2.6.1",
+    "gulp-postcss": "8.0.0",
+    "gulp-sass": "4.0.2",
+    "mini-css-extract-plugin": "^0.8.0",
+    "postcss-loader": "^3.0.0",
+    "sass": "^1.22.12",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  },
+  "scripts": {
+    "dev": "webpack --mode development",
+    "production": "webpack --mode production"
+  }
+}

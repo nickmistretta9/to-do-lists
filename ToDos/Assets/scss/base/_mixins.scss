@@ -1,0 +1,61 @@
+﻿@mixin text-shadow($x: -1px, $y: 1px, $blur: 3px, $color: rgba(0,0,0,.4)) {
+    text-shadow: $x $y $blur $color;
+}
+
+@mixin box-shadow($x: -1px, $y: 1px, $blur: 5px, $spread: -1px, $color: rgba(0,0,0,.4)) {
+    -webkit-box-shadow: $x $y $blur $spread $color;
+    box-shadow: $x $y $blur $spread $color;
+}
+
+@mixin linear-gradient($fromColor, $toColor) {
+    background-color: $toColor; /* Fallback Color */
+    background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, $fromColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
+    background-image: -moz-linear-gradient(top, $fromColor, $toColor); /* FF3.6 */
+    background-image: -ms-linear-gradient(top, $fromColor, $toColor); /* IE10 */
+    background-image: -o-linear-gradient(top, $fromColor, $toColor); /* Opera 11.10+ */
+    background-image: linear-gradient(top, $fromColor, $toColor);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{$fromColor}', EndColorStr='#{$toColor}');
+}
+
+@mixin center($xy: xy) {
+    @if $xy==xy {
+        left: 50%;
+        top: 50%;
+        bottom: auto;
+        right: auto;
+        transform: translate(-50%, -50%);
+    }
+    @else if $xy==x {
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, 0);
+    }
+    @else if $xy==y {
+        top: 50%;
+        bottom: auto;
+        transform: translate(0, -50%);
+    }
+}
+
+@mixin min-width($width) {
+    @media (min-width: $width) {
+        @content;
+    }
+}
+
+@mixin max-width($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin gradient-directional($start-color: #555, $end-color: #333, $deg: 45deg) {
+    background-image: linear-gradient($deg, $start-color, $end-color);
+    background-repeat: repeat-x;
+}
+
+@mixin gradient-x($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+    background-image: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
+    background-repeat: repeat-x;
+}
