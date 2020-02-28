@@ -19,7 +19,7 @@ $('.save-to-do').click(function (e) {
 
     $.ajax({
         type: 'POST',
-        url: '/api/items/new',
+        url: '/api/items/create',
         contentType: 'application/json',
         data: JSON.stringify(toDoData),
         success: function (data) {

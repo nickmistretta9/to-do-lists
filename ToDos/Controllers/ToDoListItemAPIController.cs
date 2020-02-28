@@ -1,35 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ToDos.Models;
-using ToDos.Repositories;
 using ToDos.Repositories.ToDoListItems;
-using ToDos.Repositories.ToDoLists;
 
 namespace ToDos.Controllers
 {
     [ApiController]
-    public class ToDoAPIController : Controller
+    public class ToDoListItemAPIController : Controller
     {
-        private readonly IToDoListRepository _toDoListRepository;
         private readonly IToDoListItemRepository _toDoListItemRepository;
 
-        public ToDoAPIController(IToDoListRepository toDoListRepository, IToDoListItemRepository toDoListItemRepository)
+        public ToDoListItemAPIController(IToDoListItemRepository toDoListItemRepository)
         {
-            _toDoListRepository = toDoListRepository;
             _toDoListItemRepository = toDoListItemRepository;
         }
 
         [HttpGet]
-        [Route("api/items/{toDoID}")]
-        public IActionResult GetToDo(int toDoID)
+        [Route("api/items/{listItemID}")]
+        public IActionResult GetToDo(int listItemID)
         {
             try
             {
-                return Json(_toDoListItemRepository.Get(toDoID));
+                return Json(_toDoListItemRepository.Get(listItemID));
             } catch (Exception ex)
             {
                 return BadRequest(ex);
@@ -37,7 +29,7 @@ namespace ToDos.Controllers
         }
 
         [HttpPost]
-        [Route("api/items/new")]
+        [Route("api/items/create")]
         public IActionResult AddToDo([FromBody] ToDoListItem listItem)
         {
             try

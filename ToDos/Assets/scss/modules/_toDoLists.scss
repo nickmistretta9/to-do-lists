@@ -47,7 +47,20 @@
                 text-align:center;
                 text-transform:uppercase;
                 font-weight:bold;
-                font-size:16px;                
+                font-size:16px;       
+                display:flex;
+                flex-wrap:wrap;
+                .actions {
+                    flex:1 1 100%;
+                    display:flex;
+                    justify-content:flex-start;
+                    a {
+                        color:#fff;
+                        text-decoration:none;
+                        font-size:16px;
+                        margin:0 5px;
+                    }
+                }
             }
             .to-do-item {
                 border-bottom:1px solid #000;

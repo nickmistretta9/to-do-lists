@@ -11,6 +11,9 @@ const initialize = () => {
     toDoListItems.init();
 
     // To Do Lists
+    const listAdd = require('./toDoList-add');
+    const listUpdate = require('./toDoList-update');
+    const listDelete = require('./toDoList-delete');
 };
 
 $(document).ready(initialize);

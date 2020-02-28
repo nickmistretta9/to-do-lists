@@ -13,13 +13,17 @@ namespace ToDos.Repositories.ToDoLists
 
         public ToDoList Create(ToDoList toDoList)
         {
-            throw new NotImplementedException();
+            return new Faker<ToDoList>().
+                Rules((f, i) =>
+                {
+                    i.DateCreated = DateTime.Now;
+                    i.ID = f.Random.Int(1, 13);
+                    i.Title = f.Random.Words(4);
+                    i.ToDoListItems = new List<ToDoListItem>();
+                });
         }
 
-        public void Delete(ToDoList toDoList)
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete(ToDoList toDoList) { }
 
         public ToDoList Get(object entityID)
         {
@@ -95,7 +99,13 @@ namespace ToDos.Repositories.ToDoLists
 
         public ToDoList Update(ToDoList toDoList)
         {
-            throw new NotImplementedException();
+            return new ToDoList
+            {
+                DateCreated = toDoList.DateCreated,
+                ID = toDoList.ID,
+                Title = toDoList.Title,
+                ToDoListItems = toDoList.ToDoListItems
+            };
         }
     }
 }

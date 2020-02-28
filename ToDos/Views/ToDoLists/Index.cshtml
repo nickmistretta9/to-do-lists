@@ -17,7 +17,13 @@
             @foreach(var list in Model)
             {
                 <div class="to-do-list" data-id="@list.ID">
-                    <div class="list-title">@list.Title</div>
+                    <div class="list-title">
+                        <div class="actions">
+                            <a href="javascript:void('')" class="edit-list"><i class="far fa-edit"></i></a>
+                            <a href="javascript:void('')" class="delete-list"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <p>@list.Title</p>
+                    </div>
                     <div class="items-list">
                         @foreach(var listItem in list.ToDoListItems)
                         {
@@ -56,6 +62,20 @@
         <div class="buttons">
             <a href="javascript:void('')" class="btn btn-cancel">Cancel</a>
             <a href="javascript:void('')" class="btn btn-primary save-to-do">Save</a>
+        </div>
+    </div>
+</div>
+
+<div class="new-list-modal out-of-view">
+    <div class="content">
+        <div class="close">
+            <a href="javascript:void('')"><i class="fas fa-times-circle"></i></a>
+        </div>
+        <h4>Add New To Do List</h4>
+        <textarea rows="4" class="new-to-do-list-description form-control" placeholder="A New To Do List..."></textarea>
+        <div class="buttons">
+            <a href="javascript:void('')" class="btn btn-cancel">Cancel</a>
+            <a href="javascript:void('')" class="btn btn-primary save-to-do-list">Save</a>
         </div>
     </div>
 </div>
