@@ -7,12 +7,13 @@ $('.edit-list').click(function (e) {
     common.functions.showListModal();
 
     let listID = $(this).parents('.to-do-list').data('id');
-    const promise = getToDoItem(listID).then((listResponse) => {
+    $('.new-list-modal .list-id').html(listID);
+    const promise = getToDoList(listID).then((listResponse) => {
         $('.new-to-do-list-description').val(listResponse['title']);
     });
 });
 
-async function getToDoItem(listID) {
+async function getToDoList(listID) {
     const url = `/api/lists/${listID}`;
     const response = await fetch(url);
     return await response.json();
@@ -21,7 +22,8 @@ async function getToDoItem(listID) {
 $('.save-to-do-list').click(function (e) {
     e.preventDefault();
     let toDoData = {
-        content: $('.new-to-do-list-description').val()
+        title: $('.new-to-do-list-description').val(),
+        id: parseInt($('.new-list-modal .list-id').html())
     };
 
     $.ajax({
@@ -40,5 +42,5 @@ $('.save-to-do-list').click(function (e) {
 });
 
 function updateToDo(toDo) {
-    $(`.to-do-list[data-id="${toDo['id']}"]"] .list-title > p`).val(toDo['title']);
+    $(`.to-do-list[data-id="${toDo['id']}"] .title`).html(toDo['title']);
 }

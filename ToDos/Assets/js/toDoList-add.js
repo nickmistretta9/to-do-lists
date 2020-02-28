@@ -31,7 +31,13 @@ $('.save-to-do-list').click(function (e) {
 
 function appendNewToDoList(toDoList) {
     const htmlElement = `<div class="to-do-list" data-id="${toDoList['id']}">
-                            <div class="list-title">${toDoList['title']}</div>
+                            <div class="list-title">
+                                <p class="title">${toDoList['title']}</p>
+                                <div class="actions">
+                                    <a href="javascript:void('')" class="btn btn-cancel">Cancel</a>
+                                    <a href="javascript:void('')" class="btn btn-primary save-to-do-list">Save</a>
+                                </div>
+                            </div>
                             <div class="items-list"></div>
                             <div class="to-do-item add-new">
                                 <a href="javascript:void('')">

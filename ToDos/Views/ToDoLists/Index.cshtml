@@ -22,7 +22,7 @@
                             <a href="javascript:void('')" class="edit-list"><i class="far fa-edit"></i></a>
                             <a href="javascript:void('')" class="delete-list"><i class="far fa-trash-alt"></i></a>
                         </div>
-                        <p>@list.Title</p>
+                        <p class="title">@list.Title</p>
                     </div>
                     <div class="items-list">
                         @foreach(var listItem in list.ToDoListItems)
@@ -68,6 +68,7 @@
 
 <div class="new-list-modal out-of-view">
     <div class="content">
+        <span class="hidden list-id" value=""></span>
         <div class="close">
             <a href="javascript:void('')"><i class="fas fa-times-circle"></i></a>
         </div>
