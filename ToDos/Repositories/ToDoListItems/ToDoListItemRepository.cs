@@ -8,8 +8,6 @@ namespace ToDos.Repositories.ToDoListItems
 {
     public class ToDoListItemRepository : BaseRepository, IToDoListItemRepository
     {
-        public ToDoListItemRepository(IConfiguration config) : base(config) { }
-
         public ToDoListItem Create(ToDoListItem toDoListItem)
         {
             return new Faker<ToDoListItem>().
