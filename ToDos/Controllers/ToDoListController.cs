@@ -8,16 +8,17 @@ namespace ToDos.Controllers
 {
     public class ToDoListController : Controller
     {
-        //private readonly IToDoListRepository _toDoListRepository;
+        private readonly IToDoListRepository _toDoListRepository;
 
-        //public ToDoListController(IToDoListRepository toDoListRepository)
-        //{
-        //    _toDoListRepository = toDoListRepository;
-        //}
+        public ToDoListController(IToDoListRepository toDoListRepository)
+        {
+            _toDoListRepository = toDoListRepository;
+        }
 
         public IActionResult Index()
         {
-            List<ToDoList> toDoLists = ToDoLists.Lists.Values.Select(t => t).ToList();
+            int userID = 1;
+            List<ToDoList> toDoLists = _toDoListRepository.GetCollection(userID).ToList();
 
             return View("~/Views/ToDoLists/Index.cshtml", toDoLists);
         }

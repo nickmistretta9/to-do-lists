@@ -47,11 +47,15 @@ namespace ToDos.Controllers
         [Route("api/lists/create")]
         public IActionResult AddToDoList([FromBody] ToDoList toDoList)
         {
-            toDoList.ID = ToDoLists.Lists.Count + 1;
-            toDoList.DateCreated = DateTime.Now;
-            ToDoLists.Lists.Add(toDoList.UserID, toDoList);
+            try
+            {
+                var insertedToDoList = _toDoListRepository.Create(toDoList);
 
-            return Json(toDoList);
+                return Json(insertedToDoList);
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -60,13 +64,15 @@ namespace ToDos.Controllers
         {
             try
             {
-                int key = ToDoLists
-                    .Lists
-                    .FirstOrDefault(t => t.Value.ID == toDoListID)
-                    .Value
-                    .ID;
+                //int key = ToDoLists
+                //    .Lists
+                //    .FirstOrDefault(t => t.Value.ID == toDoListID)
+                //    .Value
+                //    .ID;
 
-                ToDoLists.Lists.Remove(key);
+                //ToDoLists.Lists.Remove(key);
+
+                _toDoListRepository.Delete(toDoListID);
 
                 return Ok();
             } catch(Exception ex)
@@ -81,9 +87,11 @@ namespace ToDos.Controllers
         {
             try
             {
-                ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.Title = toDoList.Title;
-                ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.ToDoListItems = toDoList.ToDoListItems;                
-                return Json(ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID));
+                //ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.Title = toDoList.Title;
+                //ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.ToDoListItems = toDoList.ToDoListItems;                
+                //return Json(ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID));
+                _toDoListRepository.Update(toDoList);
+                return Ok();
             } catch(Exception ex)
             {
                 return BadRequest(ex.Message);

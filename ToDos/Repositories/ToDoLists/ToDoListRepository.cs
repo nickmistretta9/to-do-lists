@@ -9,28 +9,46 @@ namespace ToDos.Repositories.ToDoLists
     {        
         public ToDoList Create(ToDoList toDoList)
         {
+            toDoList.ID = Models.ToDoLists.Lists.Count + 1;
+            toDoList.DateCreated = DateTime.Now;
 
-            throw new NotImplementedException();
+            Models.ToDoLists.Lists[toDoList.UserID].Add(toDoList);
+
+            return toDoList;
         }
 
         public void Delete(int toDoListID)
         {
-            throw new NotImplementedException();
+            int key = Models.ToDoLists.Lists.Values.Select(t => t.FirstOrDefault(l => l.ID == toDoListID).ID).FirstOrDefault();
         }
 
         public ToDoList Get(object entityID)
         {
-            return Models.ToDoLists.Lists.Values.FirstOrDefault(t => t.ID == (int)entityID);
+            return Models
+                .ToDoLists
+                .Lists
+                .Values
+                .Select(t => t.FirstOrDefault(l => l.ID == (int)entityID))?
+                .FirstOrDefault();
         }
 
         public IEnumerable<ToDoList> GetCollection(object collectionID)
         {
-            return Models.ToDoLists.Lists.Where(t => t.Key == (int)collectionID).Select(t => t.Value);
+            return Models
+                .ToDoLists
+                .Lists
+                .Where(t => t.Key == (int)collectionID)?
+                .SelectMany(t => t.Value);
         }
 
         public void Update(ToDoList toDoList)
         {
-            throw new NotImplementedException();
+            var existingList = Models.ToDoLists.Lists[toDoList.UserID].FirstOrDefault(t => t.ID == toDoList.ID);
+            if(existingList != null)
+            {
+                existingList.Title = toDoList.Title;
+                existingList.ToDoListItems = toDoList.ToDoListItems;
+            }
         }
     }
 }
