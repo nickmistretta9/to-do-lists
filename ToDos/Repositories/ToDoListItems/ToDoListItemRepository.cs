@@ -9,30 +9,23 @@ namespace ToDos.Repositories.ToDoListItems
     {
         public ToDoListItem Create(ToDoListItem toDoListItem)
         {
-            toDoListItem.ID = Models.ToDoLists.Lists.Count + 1;
+            var list = Models.ToDoLists.Lists[toDoListItem.UserID].First(l => l.ID == toDoListItem.ToDoListID);
+            toDoListItem.ID = list.ToDoListItems.Count() + 1;
             toDoListItem.DateCreated = DateTime.Now;
 
+            list.ToDoListItems.Add(toDoListItem);
+
+            return toDoListItem;
+        }
+
+        public void Delete(ToDoListItem toDoListItem) 
+        {
             Models
                 .ToDoLists
                 .Lists[toDoListItem.UserID]
                 .FirstOrDefault(l => l.ID == toDoListItem.ToDoListID)
                 .ToDoListItems
-                .ToList()
-                .Add(toDoListItem);
-
-            return toDoListItem;
-        }
-
-        public void Delete(int toDoListItemID) 
-        {
-            ToDoListItem itemToDelete = Get(toDoListItemID);
-            Models
-                .ToDoLists
-                .Lists[itemToDelete.UserID]
-                .FirstOrDefault(l => l.ID == itemToDelete.ToDoListID)
-                .ToDoListItems
-                .ToList()
-                .Remove(itemToDelete);
+                .Remove(toDoListItem);
         }
 
         public ToDoListItem Get(object entityID)

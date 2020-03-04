@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ToDos.Models
 {
@@ -12,7 +11,7 @@ namespace ToDos.Models
 
         public DateTime DateCreated { get; set; }
 
-        public IEnumerable<ToDoListItem> ToDoListItems { get; set; }
+        public List<ToDoListItem> ToDoListItems { get; set; }
 
         public int UserID { get; set; }
     }

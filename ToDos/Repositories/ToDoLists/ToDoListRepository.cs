@@ -9,8 +9,9 @@ namespace ToDos.Repositories.ToDoLists
     {        
         public ToDoList Create(ToDoList toDoList)
         {
-            toDoList.ID = Models.ToDoLists.Lists.Count + 1;
+            toDoList.ID = Models.ToDoLists.Lists[toDoList.UserID].Count + 1;
             toDoList.DateCreated = DateTime.Now;
+            toDoList.ToDoListItems = new List<ToDoListItem>();
 
             Models.ToDoLists.Lists[toDoList.UserID].Add(toDoList);
 
@@ -19,7 +20,11 @@ namespace ToDos.Repositories.ToDoLists
 
         public void Delete(int toDoListID)
         {
-            int key = Models.ToDoLists.Lists.Values.Select(t => t.FirstOrDefault(l => l.ID == toDoListID).ID).FirstOrDefault();
+            ToDoList itemToRemove = Get(toDoListID);
+            Models
+                .ToDoLists
+                .Lists[itemToRemove.UserID]
+                .Remove(itemToRemove);
         }
 
         public ToDoList Get(object entityID)

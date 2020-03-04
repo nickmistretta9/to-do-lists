@@ -7,7 +7,7 @@ namespace ToDos.Repositories.ToDoListItems
     {
         ToDoListItem Create(ToDoListItem toDoListItem);
 
-        void Delete(int toDoListItemID);
+        void Delete(ToDoListItem toDoListItem);
 
         void Update(ToDoListItem toDoListItem);
 

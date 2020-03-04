@@ -44,12 +44,12 @@ namespace ToDos.Controllers
         }
 
         [HttpPost]
-        [Route("api/items/delete/{toDoListItemID}")]
-        public IActionResult DeleteToDo(int toDoListItemID)
+        [Route("api/items/delete")]
+        public IActionResult DeleteToDo([FromBody] ToDoListItem toDoListItem)
         {
             try
             {
-                _toDoListItemRepository.Delete(toDoListItemID);
+                _toDoListItemRepository.Delete(toDoListItem);
                 return Ok();
             } catch(Exception ex)
             {
