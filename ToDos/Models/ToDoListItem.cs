@@ -15,5 +15,7 @@ namespace ToDos.Models
         public bool Complete { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public int UserID { get; set; }
     }
 }

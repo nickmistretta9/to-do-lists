@@ -1,4 +1,5 @@
-﻿using ToDos.Models;
+﻿using System.Collections.Generic;
+using ToDos.Models;
 
 namespace ToDos.Repositories.ToDoListItems
 {
@@ -6,8 +7,12 @@ namespace ToDos.Repositories.ToDoListItems
     {
         ToDoListItem Create(ToDoListItem toDoListItem);
 
-        void Delete(ToDoListItem toDoListItem);
+        void Delete(int toDoListItemID);
 
-        ToDoListItem Update(ToDoListItem toDoListItem);
+        void Update(ToDoListItem toDoListItem);
+
+        ToDoListItem Get(ToDoListItem toDoListItem);
+
+        IEnumerable<ToDoListItem> GetCollection(ToDoList toDoList);
     }
 }

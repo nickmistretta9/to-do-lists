@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using ToDos.Models;
 using ToDos.Repositories.ToDoLists;
@@ -64,14 +63,6 @@ namespace ToDos.Controllers
         {
             try
             {
-                //int key = ToDoLists
-                //    .Lists
-                //    .FirstOrDefault(t => t.Value.ID == toDoListID)
-                //    .Value
-                //    .ID;
-
-                //ToDoLists.Lists.Remove(key);
-
                 _toDoListRepository.Delete(toDoListID);
 
                 return Ok();
@@ -86,10 +77,7 @@ namespace ToDos.Controllers
         public IActionResult UpdateToDoList([FromBody] ToDoList toDoList)
         {
             try
-            {
-                //ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.Title = toDoList.Title;
-                //ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID).Value.ToDoListItems = toDoList.ToDoListItems;                
-                //return Json(ToDoLists.Lists.FirstOrDefault(t => t.Value.ID == toDoList.ID));
+            {               
                 _toDoListRepository.Update(toDoList);
                 return Ok();
             } catch(Exception ex)
