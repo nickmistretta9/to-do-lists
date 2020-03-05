@@ -38,7 +38,7 @@ namespace ToDos
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IToDoListRepository, ToDoListRepository>();
+            //services.AddTransient<IToDoListRepository, ToDoListRepository>();
             services.AddTransient<IToDoListItemRepository, ToDoListItemRepository>();
         }
 

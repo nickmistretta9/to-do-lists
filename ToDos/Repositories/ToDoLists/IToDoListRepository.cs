@@ -5,7 +5,7 @@ namespace ToDos.Repositories.ToDoLists
     public interface IToDoListRepository : IRepository<ToDoList>
     {
         ToDoList Create(ToDoList toDoList);
-        ToDoList Update(ToDoList toDoList);
-        void Delete(ToDoList toDoList);
+        void Update(ToDoList toDoList);
+        void Delete(int toDoListID);
     }
 }

@@ -11,8 +11,11 @@ $('.add-new-list').click(function (e) {
 $('.save-to-do-list').click(function (e) {
     e.preventDefault();
     let toDoListData = {
-        content: $('.new-to-do-list-description').val()
+        title: $('.new-to-do-list-description').val(),
+        userID: 1
     };
+
+    console.log(toDoListData);
 
     $.ajax({
         type: 'POST',
@@ -20,8 +23,8 @@ $('.save-to-do-list').click(function (e) {
         contentType: 'application/json',
         data: JSON.stringify(toDoListData),
         success: function (data) {
-            appendNewToDoList(data);
             common.functions.closeListModal();
+            appendNewToDoList(data);
         },
         error: function (data) {
             alert(`Error Adding To Do: ${data}`);
@@ -32,11 +35,11 @@ $('.save-to-do-list').click(function (e) {
 function appendNewToDoList(toDoList) {
     const htmlElement = `<div class="to-do-list" data-id="${toDoList['id']}">
                             <div class="list-title">
-                                <p class="title">${toDoList['title']}</p>
                                 <div class="actions">
-                                    <a href="javascript:void('')" class="btn btn-cancel">Cancel</a>
-                                    <a href="javascript:void('')" class="btn btn-primary save-to-do-list">Save</a>
+                                    <a href="javascript:void('')" class="edit-list"><i class="far fa-edit"></i></a>
+                                    <a href="javascript:void('')" class="delete-list"><i class="far fa-trash-alt"></i></a>
                                 </div>
+                                <p class="title">${toDoList['title']}</p>
                             </div>
                             <div class="items-list"></div>
                             <div class="to-do-item add-new">

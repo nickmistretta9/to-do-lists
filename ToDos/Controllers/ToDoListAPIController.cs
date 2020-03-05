@@ -16,13 +16,27 @@ namespace ToDos.Controllers
         }
 
         [HttpGet]
+        [Route("api/lists/user/{userID}")]
+        public IActionResult GetToDoLists(int userID)
+        {
+            try
+            {
+                return Json(_toDoListRepository.GetCollection(userID));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("api/lists/{toDoListID}")]
         public IActionResult GetToDoList(int toDoListID)
         {
             try
             {
                 return Json(_toDoListRepository.Get(toDoListID));
-            } catch (Exception ex)
+            } catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -34,9 +48,9 @@ namespace ToDos.Controllers
         {
             try
             {
-                ToDoList insertedList = _toDoListRepository.Create(toDoList);
+                var insertedToDoList = _toDoListRepository.Create(toDoList);
 
-                return Json(insertedList);
+                return Json(insertedToDoList);
             } catch(Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -44,12 +58,13 @@ namespace ToDos.Controllers
         }
 
         [HttpPost]
-        [Route("api/lists/delete")]
-        public IActionResult DeleteToDoList([FromBody] ToDoList toDoList)
+        [Route("api/lists/delete/{toDoListID}")]
+        public IActionResult DeleteToDoList(int toDoListID)
         {
             try
             {
-                _toDoListRepository.Delete(toDoList);
+                _toDoListRepository.Delete(toDoListID);
+
                 return Ok();
             } catch(Exception ex)
             {
@@ -62,9 +77,9 @@ namespace ToDos.Controllers
         public IActionResult UpdateToDoList([FromBody] ToDoList toDoList)
         {
             try
-            {
-                ToDoList updatedList = _toDoListRepository.Update(toDoList);
-                return Json(updatedList);
+            {               
+                _toDoListRepository.Update(toDoList);
+                return Ok();
             } catch(Exception ex)
             {
                 return BadRequest(ex.Message);

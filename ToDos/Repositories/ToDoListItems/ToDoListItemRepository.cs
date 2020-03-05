@@ -1,43 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bogus;
-using Microsoft.Extensions.Configuration;
+using System.Linq;
 using ToDos.Models;
 
 namespace ToDos.Repositories.ToDoListItems
 {
     public class ToDoListItemRepository : BaseRepository, IToDoListItemRepository
     {
-        public ToDoListItemRepository(IConfiguration config) : base(config) { }
-
         public ToDoListItem Create(ToDoListItem toDoListItem)
         {
-            return new Faker<ToDoListItem>().
-                Rules((f, i) =>
-                {
-                    i.Content = toDoListItem.Content;
-                    i.DateCreated = DateTime.Now;
-                    i.ID = f.Random.Int(1, 13);
-                    i.Complete = false;
-                    i.Title = toDoListItem.Title;
-                    i.ToDoListID = toDoListItem.ToDoListID;
-                });
+            var list = Models.ToDoLists.Lists[toDoListItem.UserID].First(l => l.ID == toDoListItem.ToDoListID);
+            toDoListItem.ID = list.ToDoListItems.Count() + 1;
+            toDoListItem.DateCreated = DateTime.Now;
+
+            list.ToDoListItems.Add(toDoListItem);
+
+            return toDoListItem;
         }
 
-        public void Delete(ToDoListItem toDoListItem) { }
+        public void Delete(ToDoListItem toDoListItem) 
+        {
+            Models
+                .ToDoLists
+                .Lists[toDoListItem.UserID]
+                .FirstOrDefault(l => l.ID == toDoListItem.ToDoListID)
+                .ToDoListItems
+                .Remove(toDoListItem);
+        }
 
         public ToDoListItem Get(object entityID)
         {
-            return new Faker<ToDoListItem>()
-                .Rules((f, i) =>
-                {
-                    i.Content = f.Random.Words(4);
-                    i.Title = f.Random.Words(4);
-                    i.ID = (int)entityID;
-                    i.Complete = f.Random.Bool();
-                    i.ToDoListID = f.Random.Int(1, 100);
-                    i.DateCreated = f.Date.Recent();
-                });
+            throw new NotImplementedException();
+        }
+
+        public ToDoListItem Get(ToDoListItem toDoListItem)
+        {
+            return Models
+                .ToDoLists
+                .Lists[toDoListItem.UserID]?
+                .FirstOrDefault(l => l.ID == toDoListItem.ToDoListID)?
+                .ToDoListItems
+                .FirstOrDefault(l => l.ID == toDoListItem.ID);
+        }
+
+        public IEnumerable<ToDoListItem> GetCollection(ToDoList toDoList)
+        {
+            return Models
+                .ToDoLists
+                .Lists[toDoList.UserID]
+                .FirstOrDefault(l => l.ID == toDoList.ID)
+                .ToDoListItems;
         }
 
         public IEnumerable<ToDoListItem> GetCollection(object collectionID)
@@ -45,16 +57,21 @@ namespace ToDos.Repositories.ToDoListItems
             throw new NotImplementedException();
         }
 
-        public ToDoListItem Update(ToDoListItem toDoListItem)
+        public void Update(ToDoListItem toDoListItem)
         {
-            return new ToDoListItem
+            var existingItem = Models
+                .ToDoLists
+                .Lists[toDoListItem.UserID]?
+                .FirstOrDefault(l => l.ID == toDoListItem.ToDoListID)?
+                .ToDoListItems
+                .FirstOrDefault(i => i.ID == toDoListItem.ID);
+
+            if(existingItem != null)
             {
-                ID = toDoListItem.ID,
-                ToDoListID = toDoListItem.ToDoListID,
-                Complete = toDoListItem.Complete,
-                Title = toDoListItem.Title,
-                Content = toDoListItem.Content
-            };
+                existingItem.Title = toDoListItem.Title;
+                existingItem.Content = toDoListItem.Content;
+                existingItem.Complete = toDoListItem.Complete;
+            }
         }
     }
 }

@@ -16,12 +16,12 @@ namespace ToDos.Controllers
         }
 
         [HttpGet]
-        [Route("api/items/{listItemID}")]
-        public IActionResult GetToDo(int listItemID)
+        [Route("api/items")]
+        public IActionResult GetToDo([FromBody] ToDoListItem toDoListItem)
         {
             try
             {
-                return Json(_toDoListItemRepository.Get(listItemID));
+                return Json(_toDoListItemRepository.Get(toDoListItem));
             } catch (Exception ex)
             {
                 return BadRequest(ex);
@@ -45,11 +45,11 @@ namespace ToDos.Controllers
 
         [HttpPost]
         [Route("api/items/delete")]
-        public IActionResult DeleteToDo([FromBody] ToDoListItem listItem)
+        public IActionResult DeleteToDo([FromBody] ToDoListItem toDoListItem)
         {
             try
             {
-                _toDoListItemRepository.Delete(listItem);
+                _toDoListItemRepository.Delete(toDoListItem);
                 return Ok();
             } catch(Exception ex)
             {
@@ -63,11 +63,24 @@ namespace ToDos.Controllers
         {
             try
             {
-                ToDoListItem toDoItem = _toDoListItemRepository.Update(listItem);
-                return Json(toDoItem);
+                _toDoListItemRepository.Update(listItem);
+                return Ok();
             } catch(Exception ex)
             {
                 return BadRequest(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/list/items")]
+        public IActionResult GetListItems(ToDoList toDoList)
+        {
+            try
+            {
+                return Json(_toDoListItemRepository.GetCollection(toDoList));
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

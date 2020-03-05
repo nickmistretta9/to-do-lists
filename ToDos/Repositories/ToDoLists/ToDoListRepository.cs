@@ -1,111 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bogus;
-using Microsoft.Extensions.Configuration;
 using ToDos.Models;
 
 namespace ToDos.Repositories.ToDoLists
 {
     public class ToDoListRepository : BaseRepository, IToDoListRepository
-    {
-        public ToDoListRepository(IConfiguration config) : base(config) { }
-
+    {        
         public ToDoList Create(ToDoList toDoList)
         {
-            return new Faker<ToDoList>().
-                Rules((f, i) =>
-                {
-                    i.DateCreated = DateTime.Now;
-                    i.ID = f.Random.Int(1, 13);
-                    i.Title = f.Random.Words(4);
-                    i.ToDoListItems = new List<ToDoListItem>();
-                });
-        }
+            toDoList.ID = Models.ToDoLists.Lists[toDoList.UserID].Count + 1;
+            toDoList.DateCreated = DateTime.Now;
+            toDoList.ToDoListItems = new List<ToDoListItem>();
 
-        public void Delete(ToDoList toDoList) { }
-
-        public ToDoList Get(object entityID)
-        {
-            Random rand = new Random();
-            ToDoList toDoList = new Faker<ToDoList>()
-                .Rules((f, t) =>
-                {
-                    t.ID = (int)entityID;
-                    t.Title = f.Random.Words(4);
-                    t.DateCreated = DateTime.Now;
-                    t.ToDoListItems = new List<ToDoListItem>(rand.Next(3, 12));
-                });
-
-            for (int i = 0; i < toDoList.ToDoListItems.Count(); i++)
-            {
-                toDoList.ToDoListItems.ToList().Add(
-                    new Faker<ToDoListItem>()
-                    .Rules((f, l) =>
-                    {
-                        l.ToDoListID = toDoList.ID;
-                        l.Title = f.Random.Words(4);
-                        l.Content = f.Random.Words(20);
-                        l.DateCreated = DateTime.Now;
-                        l.Complete = f.Random.Bool();
-                    })
-                );
-            }
+            Models.ToDoLists.Lists[toDoList.UserID].Add(toDoList);
 
             return toDoList;
         }
 
-        public IEnumerable<ToDoList> GetCollection(object collectionID)
+        public void Delete(int toDoListID)
         {
-            Random rand = new Random();
-            List<ToDoList> toDoLists = new List<ToDoList>();
-
-            for (int i = 0; i < rand.Next(3, 5); i++)
-            {
-                toDoLists.Add(
-                    new Faker<ToDoList>()
-                    .Rules((f, t) => {
-                        t.ID = i + 1;
-                        t.Title = f.Random.Words(4);
-                        t.UserID = (int)collectionID;
-                        t.DateCreated = DateTime.Now;
-                    })
-                );
-            }
-
-            toDoLists.ForEach(t =>
-            {
-                var listItems = new List<ToDoListItem>();
-                for(int i = 0; i < rand.Next(3, 12); i++)
-                {
-                    listItems.Add(new Faker<ToDoListItem>()
-                        .Rules((f, l) =>
-                        {
-                            l.ID = i + 1;
-                            l.ToDoListID = t.ID;
-                            l.Title = f.Random.Words(4);
-                            l.DateCreated = DateTime.Now;
-                            l.Content = f.Random.Words(20);
-                            l.Complete = f.Random.Bool();
-                        })
-                    );
-
-                    t.ToDoListItems = listItems.OrderBy(l => l.Complete);
-                }
-            });
-
-            return toDoLists;
+            ToDoList itemToRemove = Get(toDoListID);
+            Models
+                .ToDoLists
+                .Lists[itemToRemove.UserID]
+                .Remove(itemToRemove);
         }
 
-        public ToDoList Update(ToDoList toDoList)
+        public ToDoList Get(object entityID)
         {
-            return new ToDoList
+            return Models
+                .ToDoLists
+                .Lists
+                .Values
+                .Select(t => t.FirstOrDefault(l => l.ID == (int)entityID))?
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<ToDoList> GetCollection(object collectionID)
+        {
+            return Models
+                .ToDoLists
+                .Lists
+                .Where(t => t.Key == (int)collectionID)?
+                .SelectMany(t => t.Value);
+        }
+
+        public void Update(ToDoList toDoList)
+        {
+            var existingList = Models.ToDoLists.Lists[toDoList.UserID].FirstOrDefault(t => t.ID == toDoList.ID);
+            if(existingList != null)
             {
-                DateCreated = toDoList.DateCreated,
-                ID = toDoList.ID,
-                Title = toDoList.Title,
-                ToDoListItems = toDoList.ToDoListItems
-            };
+                existingList.Title = toDoList.Title;
+                existingList.ToDoListItems = toDoList.ToDoListItems;
+            }
         }
     }
 }

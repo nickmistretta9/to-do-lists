@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDos.Models;
-using ToDos.Repositories;
 using ToDos.Repositories.ToDoLists;
 
 namespace ToDos.Controllers
@@ -20,17 +17,10 @@ namespace ToDos.Controllers
 
         public IActionResult Index()
         {
-            try
-            {
-                int userID = 1;
-                IEnumerable<ToDoList> toDoLists = _toDoListRepository.GetCollection(userID);
+            int userID = 1;
+            List<ToDoList> toDoLists = _toDoListRepository.GetCollection(userID).ToList();
 
-                return View("~/Views/ToDoLists/Index.cshtml", toDoLists);
-            }
-            catch (Exception ex)
-            {
-                return View();
-            }
+            return View("~/Views/ToDoLists/Index.cshtml", toDoLists);
         }
     }
 }
